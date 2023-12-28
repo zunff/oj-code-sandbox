@@ -1,5 +1,6 @@
 package com.zjh.ojcodesandbox.controller;
 
+import com.zjh.ojcodesandbox.impl.JavaDockerCodeSandbox;
 import com.zjh.ojcodesandbox.impl.JavaNativeCodeSandbox;
 import com.zjh.ojcodesandbox.model.ExecuteCodeRequest;
 import com.zjh.ojcodesandbox.model.ExecuteCodeResponse;
@@ -17,8 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/java")
 public class ExecJavaController {
+//    @Resource
+//    private JavaNativeCodeSandbox javaNativeCodeSandbox;
     @Resource
-    private JavaNativeCodeSandbox javaNativeCodeSandbox;
+    private JavaDockerCodeSandbox javaDockerCodeSandbox;
 
     //定义鉴权请求头和密钥
     private static final String AUTH_REQUEST_HEADER = "auth";
@@ -33,6 +36,7 @@ public class ExecJavaController {
         if (executeCodeRequest == null) {
             return ErrorUtils.get500Response("请求参数为空");
         }
-        return javaNativeCodeSandbox.executeCodeArgs(executeCodeRequest);
+//        return javaNativeCodeSandbox.executeCodeArgs(executeCodeRequest);
+        return javaDockerCodeSandbox.executeCodeArgs(executeCodeRequest);
     }
 }

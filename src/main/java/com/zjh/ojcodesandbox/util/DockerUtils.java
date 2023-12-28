@@ -115,7 +115,12 @@ public class DockerUtils {
                     log.error("输出错误结果：" + result);
                     errMessage[0] = result;
                 } else {
-                    String result = new String(frame.getPayload());
+                    byte[] bytes = frame.getPayload();
+                    int len = bytes.length;
+                    if (len > 0 && bytes[len - 1] == '\n') {
+                        len--;
+                    }
+                    String result = new String(bytes, 0, len);
                     log.info("输出结果：" + result);
                     message[0] = result;
                 }
