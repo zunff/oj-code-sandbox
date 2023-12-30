@@ -1,7 +1,6 @@
 package com.zjh.ojcodesandbox.impl;
 
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import com.github.dockerjava.api.DockerClient;
 import com.zjh.ojcodesandbox.model.ExecuteCodeResponse;
 import com.zjh.ojcodesandbox.model.ExecuteMessage;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class JavaDockerCodeSandbox extends JavaCodeSandboxTemplate {
+public class JavaDockerCodeArgsSandbox extends JavaCodeSandboxTemplate {
     public static final Long TIME_OUT = 5000L;
 
     public static Boolean FIRST_INIT = true;
@@ -48,11 +47,12 @@ public class JavaDockerCodeSandbox extends JavaCodeSandboxTemplate {
         for (String input : inputList) {
             String[] s = input.split(" ");
             String[] cmdArray = ArrayUtil.append(new String[]{"java", "-cp", "/app", "Main"}, s);
-            ExecuteMessage executeMessage = DockerUtils.exec(client, containerId, cmdArray, TIME_OUT);
+            ExecuteMessage executeMessage = DockerUtils.execInputByArgs(client, containerId, cmdArray, TIME_OUT);
             executeMessageList.add(executeMessage);
         }
         return executeMessageList;
     }
+
 
     @Override
     public ExecuteCodeResponse getOutputResponse(List<ExecuteMessage> executeMessageList) {

@@ -1,7 +1,7 @@
 package com.zjh.ojcodesandbox;
 
 import cn.hutool.core.io.resource.ResourceUtil;
-import com.zjh.ojcodesandbox.impl.JavaDockerCodeSandbox;
+import com.zjh.ojcodesandbox.impl.JavaDockerCodeArgsSandbox;
 import com.zjh.ojcodesandbox.model.ExecuteCodeRequest;
 import com.zjh.ojcodesandbox.model.ExecuteCodeResponse;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class OjCodeSandboxApplicationTests {
     public static final String JAVA_CLASS_NAME = "Main.java";
 
     @Resource
-    private JavaDockerCodeSandbox javaDockerCodeSandbox;
+    private JavaDockerCodeArgsSandbox javaDockerCodeSandbox;
 
     @Test
     void contextLoads() {
@@ -26,7 +26,7 @@ class OjCodeSandboxApplicationTests {
         executeCodeRequest.setInputList(Arrays.asList("1 2", "3 4"));
         executeCodeRequest.setCode(code);
         executeCodeRequest.setLanguage("java");
-        ExecuteCodeResponse executeCodeResponse = javaDockerCodeSandbox.executeCodeArgs(executeCodeRequest);
+        ExecuteCodeResponse executeCodeResponse = javaDockerCodeSandbox.executeCode(executeCodeRequest);
         System.out.println(executeCodeResponse);
     }
 

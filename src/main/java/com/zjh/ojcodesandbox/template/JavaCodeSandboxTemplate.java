@@ -58,7 +58,7 @@ public abstract class JavaCodeSandboxTemplate implements CodeSandbox {
     public List<ExecuteMessage> execCodeToMessageList(List<String> inputList, String userCodeParentPath) {
         List<ExecuteMessage> executeMessageList = new ArrayList<>();
         for (String input : inputList) {
-            String runCmd = String.format("java -Dfile.encoding=UTF-8 -cp %s Main %s", userCodeParentPath + File.separator, input);
+            String runCmd = String.format("java -Xmx256m -Dfile.encoding=UTF-8 -cp %s Main %s", userCodeParentPath + File.separator, input);
             ExecuteMessage runExecuteMessage = ProcessUtils.runProcessInputArgs(runCmd, 1);
             executeMessageList.add(runExecuteMessage);
         }
@@ -79,8 +79,7 @@ public abstract class JavaCodeSandboxTemplate implements CodeSandbox {
         //运行时间取所有用例中的最大值
         Long maxTime = 0L;
         for (ExecuteMessage executeMessage : executeMessageList) {
-            String errorMessage = executeMessage.getErrorMessage();
-            if (StrUtil.isNotBlank(errorMessage)) {
+            if (!executeMessage.getStatus().equals(ExecuteCodeStatusEum.SUCCESS.getValue())) {
                 //执行失败，记录错误，便于返回给用户
                 executeCodeResponse.setStatus(executeMessage.getStatus());
                 executeCodeResponse.setMessage(executeMessage.getErrorMessage());
@@ -115,7 +114,7 @@ public abstract class JavaCodeSandboxTemplate implements CodeSandbox {
     }
 
     @Override
-    public ExecuteCodeResponse executeCodeArgs(ExecuteCodeRequest executeCodeRequest) {
+    public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
         List<String> inputList = executeCodeRequest.getInputList();
         //1.将代码存储到本地
         File userCodeFile = saveCodeToFile(executeCodeRequest.getCode());
@@ -141,4 +140,5 @@ public abstract class JavaCodeSandboxTemplate implements CodeSandbox {
 
         return executeCodeResponse;
     }
+
 }

@@ -13,8 +13,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StopWatch;
 
-import java.io.Closeable;
-import java.io.IOException;
+import java.io.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -91,7 +90,7 @@ public class DockerUtils {
         client.startContainerCmd(containId).exec();
     }
 
-    public static ExecuteMessage exec(DockerClient client, String containerId, String[] cmd, Long timeout) {
+    public static ExecuteMessage execInputByArgs(DockerClient client, String containerId, String[] cmd, Long timeout) {
         ExecuteMessage executeMessage = new ExecuteMessage();
         ExecCreateCmdResponse execCreateCmdResponse = client.execCreateCmd(containerId)
                 .withCmd(cmd)

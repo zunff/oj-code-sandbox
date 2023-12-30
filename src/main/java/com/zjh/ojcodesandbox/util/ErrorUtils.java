@@ -21,7 +21,7 @@ public class ErrorUtils {
 
     public static ExecuteMessage getExecuteMessage(Throwable e) {
         ExecuteMessage executeMessage = new ExecuteMessage();
-        executeMessage.setStatus(500);
+        executeMessage.setStatus(ExecuteCodeStatusEum.RUNNING_FAIL.getValue());
         executeMessage.setMessage(e.getMessage());
         return executeMessage;
     }
