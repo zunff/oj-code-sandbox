@@ -67,7 +67,6 @@ public class ProcessUtils {
                 while ((infoLine = infoBufferedReader.readLine()) != null) {
                     infoSb.append(infoLine);
                 }
-                executeMessage.setMessage(infoSb.toString());
                 //读取程序执行后的报错信息
                 errorBufferedReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 StringBuilder errorSb = new StringBuilder();
@@ -75,7 +74,8 @@ public class ProcessUtils {
                 while ((errorLine = errorBufferedReader.readLine()) != null) {
                     errorSb.append(errorLine);
                 }
-                executeMessage.setMessage(errorSb.toString());
+                infoSb.append(errorSb);
+                executeMessage.setErrorMessage(infoSb.toString());
                 executeMessage.setStatus(ExecuteCodeStatusEum.RUNNING_FAIL.getValue());
             }
         } catch (Exception e) {
@@ -164,7 +164,8 @@ public class ProcessUtils {
                 while ((errorLine = errorBufferedReader.readLine()) != null) {
                     errorSb.append(errorLine);
                 }
-                executeMessage.setMessage(errorSb.toString());
+                infoSb.append(errorSb);
+                executeMessage.setErrorMessage(infoSb.toString());
                 executeMessage.setStatus(option == 0 ? ExecuteCodeStatusEum.COMPILE_FAIL.getValue() : ExecuteCodeStatusEum.RUNNING_FAIL.getValue());
             }
         } catch (Exception e) {

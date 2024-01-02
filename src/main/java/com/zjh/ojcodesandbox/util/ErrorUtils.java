@@ -5,6 +5,19 @@ import com.zjh.ojcodesandbox.model.ExecuteMessage;
 import com.zjh.ojcodesandbox.model.enums.ExecuteCodeStatusEum;
 
 public class ErrorUtils {
+    public static ExecuteCodeResponse getResponse(int code, String message) {
+        ExecuteCodeResponse executeCodeResponse = new ExecuteCodeResponse();
+        executeCodeResponse.setStatus(code);
+        executeCodeResponse.setMessage(message);
+        return executeCodeResponse;
+    }
+
+    public static ExecuteCodeResponse getResponse(ExecuteCodeStatusEum executeCodeStatusEum, String message) {
+        ExecuteCodeResponse executeCodeResponse = new ExecuteCodeResponse();
+        executeCodeResponse.setStatus(executeCodeStatusEum.getValue());
+        executeCodeResponse.setMessage(message);
+        return executeCodeResponse;
+    }
     public static ExecuteCodeResponse getResponse(ExecuteCodeStatusEum executeCodeStatusEum) {
         ExecuteCodeResponse executeCodeResponse = new ExecuteCodeResponse();
         executeCodeResponse.setStatus(executeCodeStatusEum.getValue());
